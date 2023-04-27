@@ -1,12 +1,13 @@
 import pandas as pd
 import seaborn as sns
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import r2_score, mean_squared_error
+import numpy as np
 
 # Carregar o conjunto de dados em um dataframe do Pandas
 df = pd.read_csv('gdp_csv.csv')
@@ -22,8 +23,21 @@ label_encoder = LabelEncoder()
 df['Country Name'] = label_encoder.fit_transform(df['Country Name'])
 df['Country Code'] = label_encoder.fit_transform(df['Country Code'])
 
-# Explorar os dados por meio de gráficos
+# Gráfico de box plot para visualizar a mediana e a distribuição do PIB por ano
+plt.figure(figsize=(16, 6))
+sns.boxplot(x='Year', y='Value', data=df)
+plt.xticks(rotation=90)
+plt.title('Box Plot of GDP by Year')
+plt.xlabel('Year')
+plt.ylabel('GDP')
+plt.show()
+
+# Gerar pairplot
 sns.pairplot(df)
+plt.show()
+
+# Gerar heatmap
+plt.figure(figsize=(10, 6))
 sns.heatmap(df.corr(), annot=True)
 plt.show()
 
